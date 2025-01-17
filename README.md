@@ -1,2 +1,2 @@
 #### Cybersecurity related writings...
-[Link]("https://deepsecops.github.io")
+Link: https://deepsecops.github.io
