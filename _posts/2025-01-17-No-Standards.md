@@ -27,7 +27,7 @@ Observe that the binary is ELF executable, and when it runs it prompts for the u
 
 It shows the symbols are not stripped, but we would observe that obfuscation is applied. Let's see which functions does it has, we can use gdb to identify those, by using the : info functions command: 
 
-![[Pasted image 20241209205056.png]]
+![crackme-002](/assets/img/Challenges/no-standards/img-1-1.png)
 
 Observe that the function names are obfuscated, and if we look at the ".strtab" section of the binary we would observed that no meaningful data is stored in it, it means the binary is obfuscated. 
 
@@ -155,13 +155,13 @@ FUN_00101203(local_11,8);
 
 This function taking character array reference as input, if we observe this function carefully, we would observe that it is simply calculating the characters till it encounters the null character "\0" and returning the length of the array. 
 
-![[Pasted image 20241208165105.png]]
+![crackme-003](/assets/img/Challenges/no-standards/img-2.png)
 
 ### # Analysis of FUN_0010123f(): 
 
 This function takes two arguments, first argument seems to be the reference of the array and the second parameter seems to be the size of the provided array as input. 
 
-![[img-3-1.png]]
+![crackme-004](/assets/img/Challenges/no-standards/img-3.png)
 
 Observe that the decompiled version of this version is not making sense so lets just dive into the assembly of this function: 
 
@@ -202,7 +202,7 @@ FUN_0010123f(&DAT_00102000,uVar5);
 ```
 
 If we look out what data is stored at location: DAT_00102000, we can find that this string is being printed in the standard output that we see when the program runs: 
-![[Pasted image 20241208224900.png]]
+![crackme-005](/assets/img/Challenges/no-standards/img-4.png)
 
 ### # Analysis of FUN_00101203(): 
 
@@ -324,7 +324,7 @@ void processEntry entry(void)
 ```
 
 Lets try this in action, observe that it goes into infinite loop, and we will not be able to debug it: 
-![[Pasted image 20241209223456.png]]
+![crackme-006](/assets/img/Challenges/no-standards/img-6.png)
 
 ### # Analysis of condition where it successfully attaches "ptrace" to itself: 
 So, we need to now see the condition, where it can successfully attach the "ptrace" to itself and returns 0. This is the condition which would get executed when it successfully attaches the "ptrace" to itself. 
@@ -383,7 +383,7 @@ if ((long)(~(int)DAT_00104000 + DAT_00104000 * 8) != 0x10203222121) {
 ```
 
 If we would see what data is stored at the location "DAT_00104000", hex 2a is stored in the location mentioned:
-![[Pasted image 20241209230014.png]]
+![crackme-007](/assets/img/Challenges/no-standards/img-7.png)
 
 If we do the calculation we would observe that these code is junk code added to confuse the first condition result is true as the calculation will not be equal to 0x10203222121 and the second condition result will be false as the calculation will not be equal to 0x10221503000, so it will jump to else condition of second "if" statement that we have which is: 
 
@@ -436,7 +436,7 @@ We can observe from above code that call to function FUN_00101360() is being mad
 
 From looking into the decompiled version of function "FUN_001012ff" we can observe that it is comparing the two arrays till the provided third parameter "length", it is self understandable. 
 
-![[Pasted image 20241210183704.png]]
+![crackme-008](/assets/img/Challenges/no-standards/img-8.png)
 
 Now, we need to analyze the function call being made before this function, which is ```
 ```
@@ -450,11 +450,11 @@ Let's analyze this function, first argument to this function is "local_19" array
 * It can be seen that first index of array "local_19" is set as : 0x3a (":" character)
 * Next using the previously analyzed function "FUN_00101280" length of the string stored in location "DAT_00104010" is getting calculated and getting returned in variable "bVar1".
 
-![[Pasted image 20241210183902.png]]
+![crackme-009](/assets/img/Challenges/no-standards/img-9.png)
 
 Let's see what data is stored in the location: "DAT_00104010" , we can see that these characters are stored in the location, so the function "FUN_00101280" will calculate length of this till it encounters null characters, so the collection of characters are stored is: "KHINOLMBC@AFGDEZ\[XY^_\\]RSP" , so this function will return 26.
 
-![[Pasted image 20241210184553.png]]
+![crackme-010](/assets/img/Challenges/no-standards/img-10.png)
 
 So, "bVar1" is equal to 25. Next it is doing XOR operation with the defined characters in the location "DAT_00104010", so XOR operation will be performed with all these characters : "KHINOLMBC@AFGDEZ\[XY^_\\]RSP" stored in  "DAT_00104010".
 
@@ -488,7 +488,7 @@ int main()
 
 ```
 
-![[Pasted image 20241210190423.png]]
+![crackme-011](/assets/img/Challenges/no-standards/img-10-1.png)
 
 Next the "if" condition will not be executed as "bVar1" is greater than 10.  Next code instructions are: 
 
@@ -524,7 +524,7 @@ Now, we know that what are the contents in the array "local_19", next it compare
 
 So, what if we provide the user input as ":wq", lets see what happens: 
 
-![[Pasted image 20241210191658.png]]
+![crackme-012](/assets/img/Challenges/no-standards/img-11.png)
 
 Yeah!!! we have escaped...................
 
@@ -592,7 +592,7 @@ int main()
 
 We can observe that if we run this above programs, both the arrays are equal, that is why we are able to achieve and successfully complete the challenge. 
 
-![[Pasted image 20241210193055.png]]
+![crackme-013](/assets/img/Challenges/no-standards/img-12.png)
 
 Lets' get back with another cool challenge...
 
