@@ -23,7 +23,7 @@ This challenge was easy but it adds up little bit of **anti-debugging methods** 
 
 Observe that the binary is ELF executable, and when it runs it prompts for the user input and it only accepts 8 characters from the user input and discards other characters. 
 
-![Pasted image 20241208162243.png](https://github.com/deepsecops/Challanges/blob/main/crackmes/no-standards/img/img-1-1.png)
+![crackme-001](/assets/img/Challenges/no-standards/img-1.png)
 
 It shows the symbols are not stripped, but we would observe that obfuscation is applied. Let's see which functions does it has, we can use gdb to identify those, by using the : info functions command: 
 
