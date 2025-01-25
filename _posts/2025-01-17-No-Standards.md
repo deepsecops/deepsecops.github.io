@@ -11,8 +11,9 @@ toc: true
 
 ## No-Standards
 
-Link to the challenge: https://crackmes.one/crackme/6736b3a09b533b4c22bd2b9f 
-My Linkedin profile: https://www.linkedin.com/in/deepak-bhardwaj-aa8543143/ 
+Link to the challenge: [**https://crackmes.one/crackme/6736b3a09b533b4c22bd2b9f**](https://crackmes.one/crackme/6736b3a09b533b4c22bd2b9f)
+
+My Linkedin profile: [**https://www.linkedin.com/in/deepak-bhardwaj-aa8543143/**](https://www.linkedin.com/in/deepak-bhardwaj-aa8543143/)
 
 This challenge was easy but it adds up little bit of **anti-debugging methods** which confuses our analysis but if we observe carefully we would get to know the inner workings of it by analyzing the decompiled binary code and looking into the flow of the code and for some function decompiled version of the code is not making any sense so need to look into assembly of those functions. 
 
