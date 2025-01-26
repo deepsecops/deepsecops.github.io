@@ -36,8 +36,7 @@ Let's statically analyze the binary using "Ghidra", we would observe that once b
 
 This is the decompiled version of the entry() function by ghidra, lets observe this function carefully: 
 
-```
-
+```c
 /* WARNING: Control flow encountered bad instruction data */
 
 void processEntry entry(void)
@@ -118,7 +117,7 @@ void processEntry entry(void)
 ```
 
 Observe that at the start of the function local variables and the local arrays are defined, it can also be observed that the array "local_11" is assigned with all the zeros:
-```
+```c
 void processEntry entry(void)
 {
   char cVar1;
@@ -146,7 +145,7 @@ void processEntry entry(void)
 
 First three function calls is done in this order, lets analyze these 3 functions one by one: 
 
-```
+```c
 uVar5 = FUN_00101280(&DAT_00102000);
 FUN_0010123f(&DAT_00102000,uVar5);
 FUN_00101203(local_11,8);
@@ -166,7 +165,7 @@ This function takes two arguments, first argument seems to be the reference of t
 
 Observe that the decompiled version of this version is not making sense so lets just dive into the assembly of this function: 
 
-```
+```asm
 0010123f f3 0f 1e fa     ENDBR64
 00101243 53              PUSH       RBX
 00101244 48 89 7c        MOV        qword ptr [RSP + local_10],RDI
@@ -208,7 +207,7 @@ If we look out what data is stored at location: DAT_00102000, we can find that t
 ### # Analysis of FUN_00101203(): 
 
 In the above de-compiled version of "entry" function, we can observe that next function is call is: 
-```
+```c
 FUN_00101203(local_11,8);
 ```
 
@@ -221,7 +220,7 @@ If we observe the disassembly of the function, its like above function its also 
 **Note: So, this function is reading the input (just 8 characters) provided by the user from the standard input, and saving it in the array "local_11". 
 
 So, till now we have analyzed till here (read the comments after function calls): 
-```
+```c
 void processEntry entry(void)
 
 {
@@ -245,13 +244,13 @@ So, lets further analyze the function: FUN_00101475().
 ### # Analysis of FUN_00101475(): 
 
 In the above de-compiled version of "entry" function, we can observe that the next function call is: 
-```
+```c
  cVar1 = FUN_00101475(); 
 ```
 
 If we observe the disassembly of the function, we would observe that it is again making a system function call by using the "syscall" instruction, its interesting lets analyze assembly: 
 
-```
+```asm
 00101482 6a 32           PUSH       0x32
 00101484 48 c7 c0        MOV        RAX,0x2
          02 00 00 00
@@ -279,7 +278,7 @@ As, we saw it doesn't takes any argument, so lets understand assembly:
 * Then it is doing system call, where the system call number is 101, which is "sys_ptrace". 
 
 The "ptrace" system call would look something like this: 
-```
+```c
 long ptrace(int request, pid_t pid, void *addr, void *data);
 ```
 
@@ -297,7 +296,7 @@ Observe that once user attaches a debugger like "gdb" or another as implicitly i
 
 **Note:** There is also an option to escape from this, which is binary patching, but that won't help much as obfuscation is also in place, which makes it hard to understand which functions or variable is being used. 
 
-```
+```c
 void processEntry entry(void)
 {
   // removed the code where local variables were declared
@@ -330,7 +329,7 @@ Lets try this in action, observe that it goes into infinite loop, and we will no
 ### # Analysis of condition where it successfully attaches "ptrace" to itself: 
 So, we need to now see the condition, where it can successfully attach the "ptrace" to itself and returns 0. This is the condition which would get executed when it successfully attaches the "ptrace" to itself. 
 
-```
+```c
   cVar1 = FUN_00101475();
   if (cVar1 == '\0') {
     if ((long)(~(int)DAT_00104000 + DAT_00104000 * 8) != 0x10203222121) {
@@ -378,7 +377,7 @@ So, we need to now see the condition, where it can successfully attach the "ptra
 ```
 
 There are two conditions we need to look at : 
-```
+```c
 if ((long)(~(int)DAT_00104000 + DAT_00104000 * 8) != 0x10203222121) {
       if ((long)(~(int)DAT_00104000 + DAT_00104000 * 8) == 0x10221503000) {
 ```
@@ -388,7 +387,7 @@ If we would see what data is stored at the location "DAT_00104000", hex 2a is st
 
 If we do the calculation we would observe that these code is junk code added to confuse the first condition result is true as the calculation will not be equal to 0x10203222121 and the second condition result will be false as the calculation will not be equal to 0x10221503000, so it will jump to else condition of second "if" statement that we have which is: 
 
-```
+```c
 cVar1 = FUN_00101475();
   if (cVar1 == '\0') {
     if ((long)(~(int)DAT_00104000 + DAT_00104000 * 8) != 0x10203222121) {
@@ -418,7 +417,7 @@ cVar1 = FUN_00101475();
 
 So, we need to now focus on this part of the code, where the key might be getting compared: 
 
-```
+```c
       else {
         FUN_00101360(local_19,8);
         cVar1 = FUN_001012ff(local_11,local_19,8);
@@ -440,7 +439,7 @@ From looking into the decompiled version of function "FUN_001012ff" we can obser
 ![crackme-008](/assets/img/Challenges/no-standards/img-8.png)
 
 Now, we need to analyze the function call being made before this function, which is ```
-```
+```c
 FUN_00101360(local_19,8);
 ```
 
@@ -459,7 +458,7 @@ Let's see what data is stored in the location: "DAT_00104010" , we can see that 
 
 So, "bVar1" is equal to 25. Next it is doing XOR operation with the defined characters in the location "DAT_00104010", so XOR operation will be performed with all these characters : "KHINOLMBC@AFGDEZ\[XY^_\\]RSP" stored in  "DAT_00104010".
 
-```
+```c
   if (bVar1 != 0) {
     lVar2 = 0;
     do {
@@ -470,7 +469,7 @@ So, "bVar1" is equal to 25. Next it is doing XOR operation with the defined char
 ```
 
 We would observe that if we do XOR of the stored data with 0x2a, we can write a small program: 
-```
+```c
 #include<stdio.h>
 
 int main()
@@ -493,7 +492,7 @@ int main()
 
 Next the "if" condition will not be executed as "bVar1" is greater than 10.  Next code instructions are: 
 
-```
+```c
 param_1[1] = (&DAT_00104010)[(int)(0x2a % (ulong)(long)(int)(uint)bVar1) + 6];
 param_1[2] = (&DAT_00104010)[(int)(0x2a % (ulong)(long)(int)(uint)bVar1)];
 param_1[3] = 10;
@@ -503,7 +502,7 @@ param_1[5] = bVar1 % 0x1a;
 
 So, if we evaluate these we will get to know that: 
 
-```
+```c
 param_1[1] = DAT_00104010[22];
 param_1[2] = DAT_00104010[16];
 param_1[3] = 10;
@@ -512,7 +511,7 @@ param_1[5] = 0;
 ```
 
 So, the array "local_19" which was passed with reference as input to this function becomes: 
-```
+```c
 param_1[0] = ":";
 param_1[1] = "w";
 param_1[2] = "q";
@@ -532,7 +531,7 @@ Yeah!!! we have escaped...................
 
 **Note:** You might be thinking what happened to the characters at index 6th and 7th as we know that "local_11" array was initialized with 0 before and based on the memory layout array "local_19" also contained 0, so 6th and 7th index matched. I created a program for checking that as well: 
 
-```
+```c
 #include<stdio.h>
 
 int check(char* str1, char* str2, int len)
