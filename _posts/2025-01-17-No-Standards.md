@@ -165,7 +165,7 @@ This function takes two arguments, first argument seems to be the reference of t
 
 Observe that the decompiled version of this version is not making sense so lets just dive into the assembly of this function: 
 
-```asm
+```
 0010123f f3 0f 1e fa     ENDBR64
 00101243 53              PUSH       RBX
 00101244 48 89 7c        MOV        qword ptr [RSP + local_10],RDI
@@ -197,7 +197,7 @@ For more information about the syscall number, please refer:
 So, this function is basically writing the provided string according to the provided length to the standard output. 
 
 So, by calling this function it is printing the data stored at &DAT_00102000: 
-```
+```c
 FUN_0010123f(&DAT_00102000,uVar5);
 ```
 
@@ -250,7 +250,7 @@ In the above de-compiled version of "entry" function, we can observe that the ne
 
 If we observe the disassembly of the function, we would observe that it is again making a system function call by using the "syscall" instruction, its interesting lets analyze assembly: 
 
-```asm
+```
 00101482 6a 32           PUSH       0x32
 00101484 48 c7 c0        MOV        RAX,0x2
          02 00 00 00
