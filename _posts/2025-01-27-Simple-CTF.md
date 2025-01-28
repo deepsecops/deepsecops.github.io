@@ -18,12 +18,11 @@ This challenge was simple as by looking at the decompiled version of the code we
 
 Observe that we have ELF binary, in which the user input is being prompt and it requires a special string to get to the right condition, we would be using "Ghidra" to analyze the disassembled and decompiled code. 
 
-![[Pasted image 20241030153152.png]]
+![crackme-001](/assets/img/Challenges/simple-ctf/img-1.png)
 
 This is the decompiled version of the main() function, provided by the ghidra, observe that lots of local variables in the decompiled code, 
 
-```
-
+```c
 undefined8 main(void)
 
 {
@@ -122,8 +121,6 @@ undefined8 main(void)
   }
   return 0;
 }
-
-
 ```
 
 Observe that after the string input received from the user input, the string is compared with the defined constant string "valid_ctf", and according to the return type received from the strcmp() function it would take the next "if" condition, however if we observe a bit, it could be seen that final comparison is taking place after the "if" condition, and that code part will be executed every time no matter what is the output from the string comparison above. 
@@ -146,14 +143,15 @@ From the above code we have some points to note:
 		- ```compare_hashes(&local_c8,local_88,0xf);```
 
 
-#### Analysis of "compare_hashes" function:
+#### # Analysis of "compare_hashes" function:
 Now, observe that in the function "compare_hashes", the reference to the local variable is passed, so lets check this function decompiled version:
 
-![[Pasted image 20241030153215.png]]
+![crackme-002](/assets/img/Challenges/no-standards/img-2.png)
 
 
 From the above code understanding this part is crucial:
-if (*(int *)(param_1 + local_10 * 4) != *(int *)(param_2 + local_10 * 4)) break;
+
+``if (*(int *)(param_1 + local_10 * 4) != *(int *)(param_2 + local_10 * 4)) break;``
 
 Lets understand this part and the working of loop: 
 
@@ -162,6 +160,7 @@ When the loop starts running initially in the "param_1" we have the reference of
 ```*(int *)(param_1 + local_10 * 4)```
 
 On 1st Iteration:
+
 ```*(int *)(param_1) --> (int*)0x1a22 --> 0x20c7 // here it is just typecasting it to the size of the pointer which is 8 bytes in 64 bits, so the final value contains the variable value of local_c8```
 
 On 2nd Iteration: 
@@ -171,14 +170,14 @@ Now the reference "param_1+4" would point to next variable defined because by ad
 
 So, in the function "compare_hashes" function its just compares the value stored in the variables from "local_c8" till variable "local_90" with each index from 0-14th index of the "local_88" array passed.
 
-#### Analysis of the "ctfhash" function:
+#### # Analysis of the "ctfhash" function:
 So, now we need to understand how the "local_88" array values were created in the function "ctfhash" using the user input which is stored in the "local_47" character array:
 
-![[Pasted image 20241030153239.png]]
+![crackme-003](/assets/img/Challenges/no-standards/img-3.png)
 
 If we observe the function and analyze the processing of it, we could make a simplified version of the above code as: 
 
-```
+```c
 ctfhash(local_47,local_88,0xf):
 
 	for (i = 0; i < 0xf ; i++) 
@@ -186,15 +185,14 @@ ctfhash(local_47,local_88,0xf):
 		local_88[i] = (local_47[i] * 100);
 		local_88[i] = i + local_88[i] + (-10);	
 	}
-
 ```
 
 And now we could understand that how the "local_88" array elements are being created. 
 
 *Note: If the user would pass the correct key or the string when this binary would run, the index value that would be stored in array local_88 would be same as the value stored in the local variables from local_c8 to local_90, something like this:*
 
-```
-```local_88[0] = 0x1a22;
+```c
+local_88[0] = 0x1a22;
 local_88[1] = 0x20c7;
 local_88[2] = 0x1b50;	
 local_88[3] = 0x2515;
@@ -217,7 +215,7 @@ So, by doing some math we could easily identify the local_47 array as we already
 
 So, the final program to generate the key or string to successfully run this program would be: 
 
-```
+```c
 #include<stdio.h>
 #include<stdlib.h>
 
