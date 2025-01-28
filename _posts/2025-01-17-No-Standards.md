@@ -1,5 +1,7 @@
 ---
 title: No-Standards
+description: >-
+   In this reverse engineering challenge we will see some anti-debugging methods used by the binary and how we could make our path to solve our challenge. 
 author: deepsecops
 date: 2025-01-17T12:00:00+0530
 categories: [Reverse Engineering Challanges, No-Standards]
