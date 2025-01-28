@@ -12,7 +12,11 @@ toc: true
 
 ## Simple CTF
 
-Link to the challange: https://crackmes.one/crackme/66ee30341070323296555610 
+Link to the Challenge: [**https://crackmes.one/crackme/66ee30341070323296555610**](https://crackmes.one/crackme/66ee30341070323296555610)
+
+My Linkedin Profile: [**https://www.linkedin.com/in/deepak-bhardwaj-aa8543143/**](https://www.linkedin.com/in/deepak-bhardwaj-aa8543143/)
+
+My crackme's profile: [**https://crackmes.one/user/anon786**](https://crackmes.one/user/anon786)
 
 This challenge was simple as by looking at the decompiled version of the code we could figure out the inner workings and do reversing of the interesting functions, we didn't have to dig in into the disassembly. 
 
@@ -146,7 +150,7 @@ From the above code we have some points to note:
 #### # Analysis of "compare_hashes" function:
 Now, observe that in the function "compare_hashes", the reference to the local variable is passed, so lets check this function decompiled version:
 
-![crackme-002](/assets/img/Challenges/no-standards/img-2.png)
+![crackme-002](/assets/img/Challenges/simple-ctf/img-3.png)
 
 
 From the above code understanding this part is crucial:
@@ -173,7 +177,7 @@ So, in the function "compare_hashes" function its just compares the value stored
 #### # Analysis of the "ctfhash" function:
 So, now we need to understand how the "local_88" array values were created in the function "ctfhash" using the user input which is stored in the "local_47" character array:
 
-![crackme-003](/assets/img/Challenges/no-standards/img-3.png)
+![crackme-003](/assets/img/Challenges/simple-ctf/img-2.png)
 
 If we observe the function and analyze the processing of it, we could make a simplified version of the above code as: 
 

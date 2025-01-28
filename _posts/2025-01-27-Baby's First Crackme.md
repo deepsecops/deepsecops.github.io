@@ -12,14 +12,17 @@ toc: true
 
 ## Baby's First Crackme:
 
-Link to the challenge: https://crackmes.one/crackme/66736380e7b35c09bb266f92  
-My Linkedin Profile: https://www.linkedin.com/in/deepak-bhardwaj-aa8543143/ 
+Link to the Challenge: [**https://crackmes.one/crackme/66736380e7b35c09bb266f92**](https://crackmes.one/crackme/66736380e7b35c09bb266f92)
+
+My Linkedin Profile: [**https://www.linkedin.com/in/deepak-bhardwaj-aa8543143/**](https://www.linkedin.com/in/deepak-bhardwaj-aa8543143/)
+
+My crackme's profile: [**https://crackmes.one/user/anon786**](https://crackmes.one/user/anon786)
 
 This challenge was of easy difficulty as well, where we just have to understand the code logic, and reverse some functions, we need to analyze assembly instructions to get to know the proper argument values. Solving this challenge from disassembly + de-compiled code, so even if the symbols were stripped for this binary, we can get the logic easily. Lets dive into the challenge.
 
 Observe that it is an ELF executable, with the symbols not stripped and the usage is provided, it accepts : key and a number
 
-![[Pasted image 20241111211435.png]]
+![crackme-001](/assets/img/Challenges/baby-first-crackme/img-1.png)
 
 
 Let's analyze the binary using "Ghidra" or "gdb", we would observe that once binary is analyzed by the tool we could see the disassembly and de-compilation of the binary. 
@@ -100,10 +103,10 @@ This is the second part of assembly code of the main() function, where the jump 
 ```
 
 Observe in the image, "rsi" register holding the second argument to function which is the arguments array : 
-![[img-2.png]]
+![crackme-002](/assets/img/Challenges/baby-first-crackme/img-2.png)
 
 Observe that first three arguments to the function is printed in "gdb", while the program is running, i have set the breakpoint in the main function. 
-![[img-3.png]]
+![crackme-003](/assets/img/Challenges/baby-first-crackme/img-3.png)
 
 
 The "key" which is second parameter, its value is getting stored in location :  ```qword ptr [RBP + local_10]``` 
@@ -230,7 +233,7 @@ Now, in the next part of the explanation i am using the de-compiled version of t
 
 Here is the screenshot of the de-compiled version of "check_key" function by ghidra.
 
-![[Pasted image 20241113220620.png]]
+![crackme-004](/assets/img/Challenges/baby-first-crackme/img-4.png)
 
 If we observe the function and analyze the processing of it, we could make a simplified version of the above code as: 
 
@@ -271,7 +274,7 @@ Now, we need to understand what are the contents in the "local_58" array, so for
 
 Here is the screenshot of the de-compiled version of "encode_input" function by ghidra.
 
-![[Pasted image 20241113225418.png]]
+![crackme-005](/assets/img/Challenges/baby-first-crackme/img-5.png)
 
 If we observe the function and analyze the processing of it, we could make a simplified version of the above code as: 
 
@@ -369,10 +372,10 @@ int main()
 If we would run the solution and take the value of key and number and use it in the challenge it can be observed that we have solved the challenge. 
 
 Observe that all possible keys and numbers are generated
-![[img-6.png]]
+![crackme-006](/assets/img/Challenges/baby-first-crackme/img-6.png)
 
 Observed that "Access granted!!!" is received, keys and numbers combination is correct
-![[img-7.png]]
+![crackme-007](/assets/img/Challenges/baby-first-crackme/img-7.png)
 
 
 **Note:** In the decompiled version of the code from "ghidra" at the end after the loop it says: 
