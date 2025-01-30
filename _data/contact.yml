@@ -1,5 +1,9 @@
 #  The contact options.
 
+- type: linkedin  
+  icon: 'fab fa-linkedin'
+  url: 'https://www.linkedin.com/in/deepak-bhardwaj-aa8543143/'
+
 - type: github
   icon: "fab fa-github"
 
@@ -13,6 +17,8 @@
 - type: rss
   icon: "fas fa-rss"
   noblank: true
+
+
 # Uncomment and complete the url below to enable more contact options
 #
 # - type: mastodon
