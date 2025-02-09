@@ -4,7 +4,7 @@ description: >-
    In this reverse engineering challenge we will see some anti-debugging methods used by the binary and how we could make our path to solve our challenge. 
 author: deepsecops
 date: 2025-01-17T12:00:00+0530
-categories: [Reverse Engineering Challanges, No-Standards]
+categories: [Reverse Engineering Challanges, crackme]
 tags: [crackme]
 toc: true
 ---
@@ -12,11 +12,11 @@ toc: true
 
 ## No-Standards
 
-Link to the Challenge: [**https://crackmes.one/crackme/6736b3a09b533b4c22bd2b9f**](https://crackmes.one/crackme/6736b3a09b533b4c22bd2b9f)
+Link to the Challenge: [https://crackmes.one/crackme/6736b3a09b533b4c22bd2b9f](https://crackmes.one/crackme/6736b3a09b533b4c22bd2b9f)
 
-My Linkedin Profile: [**https://www.linkedin.com/in/deepak-bhardwaj-aa8543143/**](https://www.linkedin.com/in/deepak-bhardwaj-aa8543143/)
+My Linkedin Profile: [https://www.linkedin.com/in/deepak-bhardwaj-aa8543143/](https://www.linkedin.com/in/deepak-bhardwaj-aa8543143/)
 
-My crackme's profile: [**https://crackmes.one/user/anon786**](https://crackmes.one/user/anon786)
+My crackme's profile: [https://crackmes.one/user/anon786](https://crackmes.one/user/anon786)
 
 This challenge was easy but it adds up little bit of **anti-debugging methods** which confuses our analysis but if we observe carefully we would get to know the inner workings of it by analyzing the decompiled binary code and looking into the flow of the code and for some function decompiled version of the code is not making any sense so need to look into assembly of those functions. 
 

@@ -4,7 +4,7 @@ description: >-
   This challenge make use of disassembly and creating the pseudo-code for the function, analysis of the decompiled function to solve the challenge.
 author: deepsecops
 date: 2025-01-17T12:00:00+0530
-categories: [Reverse Engineering Challanges, Baby's First Crackme]
+categories: [Reverse Engineering Challanges, crackme]
 tags: [crackme]
 toc: true
 ---
@@ -12,11 +12,11 @@ toc: true
 
 ## Baby's First Crackme:
 
-Link to the Challenge: [**https://crackmes.one/crackme/66736380e7b35c09bb266f92**](https://crackmes.one/crackme/66736380e7b35c09bb266f92)
+Link to the Challenge: [https://crackmes.one/crackme/66736380e7b35c09bb266f92](https://crackmes.one/crackme/66736380e7b35c09bb266f92)
 
-My Linkedin Profile: [**https://www.linkedin.com/in/deepak-bhardwaj-aa8543143/**](https://www.linkedin.com/in/deepak-bhardwaj-aa8543143/)
+My Linkedin Profile: [https://www.linkedin.com/in/deepak-bhardwaj-aa8543143/](https://www.linkedin.com/in/deepak-bhardwaj-aa8543143/)
 
-My crackme's profile: [**https://crackmes.one/user/anon786**](https://crackmes.one/user/anon786)
+My crackme's profile: [https://crackmes.one/user/anon786](https://crackmes.one/user/anon786)
 
 This challenge was of easy difficulty as well, where we just have to understand the code logic, and reverse some functions, we need to analyze assembly instructions to get to know the proper argument values. Solving this challenge from disassembly + de-compiled code, so even if the symbols were stripped for this binary, we can get the logic easily. Lets dive into the challenge.
 
