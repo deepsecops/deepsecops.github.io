@@ -43,7 +43,7 @@ int main()
 }
 ```
 
-![res-001](assets\img\Research\ud2-ud2a-instruction\img-1.png)
+![res-001](assets/img/Research/ud2-ud2a-instruction/img-1.png)
 
 
 This is expected, as the system got the SIGILL signal and this signal is handled by the system then program execution is stopped but what if we want to keep executing the program even after the illegal instruction exception is raised to the OS. 
@@ -91,20 +91,20 @@ int main() {
 ```
 After running the above code it can be observed that it is calling infinitely the singal handler (that we have defined) after it enters into the main function.
 
-![res-002](assets\img\Research\ud2-ud2a-instruction\img-2.png)
+![res-002](assets/img/Research/ud2-ud2a-instruction/img-2.png)
 
 Lets find the root cause of it using "gdb" debugger.
 
 Disassembly of the main function:
-![res-003](assets\img\Research\ud2-ud2a-instruction\img-3.png)
+![res-003](assets/img/Research/ud2-ud2a-instruction/img-3.png)
 
 
 Execution stopped at the breakpoint to handle_sigill function:
-![res-004](assets\img\Research\ud2-ud2a-instruction\img-4.png)
+![res-004](assets/img/Research/ud2-ud2a-instruction/img-4.png)
 
 
 Execution reaches back to the main function, observe the "rip" register:
-![res-005](assets\img\Research\ud2-ud2a-instruction\img-5.png)
+![res-005](assets/img/Research/ud2-ud2a-instruction/img-5.png)
 
 
 Observe that when the execution reaches back to the main function the "RIP" register still points to the "ud2" instruction as the register values were restored by the "__restore_rt()" function, and when that will execute again it will invoke our singal handler and it keeps going and to understand why this happens we need to understand what happens when a interrupt occurs (this signal exception causes a software interrupt to occur). 
@@ -134,10 +134,10 @@ We know from above screenshot that in main function this is the address which po
 Let's observe the stack after our signal handler is invoked and when the "rbp" is pointing into current frame.
 
 Observe that "rbp" is pointing to the current frame: 
-![res-006](assets\img\Research\ud2-ud2a-instruction\img-6.png)
+![res-006](assets/img/Research/ud2-ud2a-instruction/img-6.png)
 
 Observe the stack when signal handler is invoked: 
-![res-007](assets\img\Research\ud2-ud2a-instruction\img-7.png)
+![res-007](assets/img/Research/ud2-ud2a-instruction/img-7.png)
 
 Observe that the address which is pointing to the "ud2" its upper 4 bytes (which is sufficient) are stored in the stack on address: ```0x7fffffffd868```
 And the "rbp" is pointing to : ```0x00007fffffffd7b0```
@@ -147,7 +147,7 @@ We can confirm that our calculation is correct by using:
 
 ```x/x $rbp+0xb8```
 
-![res-008](assets\img\Research\ud2-ud2a-instruction\img-8.png)
+![res-008](assets/img/Research/ud2-ud2a-instruction/img-8.png)
 
 
 Now lets write assembly code which would update this address by 2 bytes and that will make it point to next instruction. We can use "\__asm__()" function in C to include inline assembly in our C program. These instructions will basically update the value stored at location "$rbp+0xb8" and add 0x2 into it: 
@@ -215,19 +215,19 @@ int main() {
 
 If we compile and run above code, we would observe that after the call returns from the handler function it is executing from the next instruction of "ud2" or "ud2a" instruction which is not causing the infinite loop calls to signal handler and execution is successful. 
 
-![res-009](assets\img\Research\ud2-ud2a-instruction\img-9.png)
+![res-009](assets/img/Research/ud2-ud2a-instruction/img-9.png)
 
 
 Let's provide this binary to ghidra and observe that how the disassembly will look: 
 
-![res-010](assets\img\Research\ud2-ud2a-instruction\img-10.png)
+![res-010](assets/img/Research/ud2-ud2a-instruction/img-10.png)
 
 Observe ghidra by default didn't disassembled the binary after encountering the "ud2" or "ud2a" instruction, we can manually disassemble by selecting the hex bytes after the "ud2" instructions till the end then right click and select disassemble --> Observe that now we got the disassembly of the code after the "ud2" and "ud2a" instruction. 
 
-![res-011](assets\img\Research\ud2-ud2a-instruction\img-11.png)
+![res-011](assets/img/Research/ud2-ud2a-instruction/img-11.png)
 
 
-![res-012](assets\img\Research\ud2-ud2a-instruction\img-12.png)
+![res-012](assets/img/Research/ud2-ud2a-instruction/img-12.png)
 
 
 If we use objdump tool it will show us the disassembly of the binary after the "ud2" or "ud2a" instruction, there are several other ways we can path the binary by replacing "ud2" or "ud2a" instructions with "nop" instruction.
