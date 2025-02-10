@@ -230,7 +230,7 @@ Observe ghidra by default didn't disassembled the binary after encountering the 
 ![res-012](assets/img/Research/ud2-ud2a-instruction/img-12.png)
 
 
-If we use objdump tool it will show us the disassembly of the binary after the "ud2" or "ud2a" instruction, there are several other ways we can path the binary by replacing "ud2" or "ud2a" instructions with "nop" instruction.
+If we use objdump tool it will show us the disassembly of the binary after the "ud2" or "ud2a" instruction, there are several other ways we can patch the binary by replacing "ud2" or "ud2a" instructions with "nop" instruction.
 
 
 
