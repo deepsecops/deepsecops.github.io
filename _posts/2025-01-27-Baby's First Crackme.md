@@ -314,6 +314,7 @@ encode_input(char* key, int num, char* local_58):
 
 Observe that this function is writing into the "local_58" array till the length of the "key" array that we have passed as an argument to this function, so length of the "local_58" would also be equal to the "key" length which is 12. 
 
+
 So, from above analysis we know that if the "local_58\[strlen(local_58) - 1\]" is equal to 124 , it prints the "Access granted!!!" in the console, else "Access Denied" is printed.  The local_58\[11\] value should be equal to 124  (the resulting character in local_58\[11\] should contain "|" ) when comparison would happen it will automatically gets type-casted to its decimal value according to ASCII table. 
 
 So, according to function "encode_input" lets see in which condition inside loop local_58 array's 11th index is getting populated as we now know what should be the resulting value at that index. 
