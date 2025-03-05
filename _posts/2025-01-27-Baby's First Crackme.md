@@ -186,7 +186,7 @@ Then after it is calling the function check_key() function with the "key" and in
 
 So, after reversing the assembly code, we get the main() function look something like below code:
 
-```
+```c
 
 int main(int argc, char *argv[])
 {
@@ -237,7 +237,7 @@ Here is the screenshot of the de-compiled version of "check_key" function by ghi
 
 If we observe the function and analyze the processing of it, we could make a simplified version of the above code as: 
 
-```
+```c
 check_key(key,num):
 	
 	char local_58[56];
@@ -278,7 +278,7 @@ Here is the screenshot of the de-compiled version of "encode_input" function by 
 
 If we observe the function and analyze the processing of it, we could make a simplified version of the above code as: 
 
-```
+```c
 encode_input(char* key, int num, char* local_58):
 	 
 	int i;
@@ -314,7 +314,9 @@ encode_input(char* key, int num, char* local_58):
 
 Observe that this function is writing into the "local_58" array till the length of the "key" array that we have passed as an argument to this function, so length of the "local_58" would also be equal to the "key" length which is 12. 
 
-So, from above analysis we know that if the "local_58\[strlen(local_58) - 1\]" is equal to 124 , it prints the "Access granted!!!" in the console, else "Access Denied" is printed.  The local_58\[11\] value should be equal to 124  (the resulting character in local_58\[11\] should contain "|" ) when comparison would happen it will automatically gets type-casted to its decimal value according to ASCII table. 
+>
+So, from above analysis we know that if the \"local_58\[strlen(local_58) - 1\]\" is equal to 124 , it prints the "Access granted!!!" in the console, else "Access Denied" is printed.  The local_58\[11\] value should be equal to 124  (the resulting character in local_58\[11\] should contain \"\|\" ) when comparison would happen it will automatically gets type-casted to its decimal value according to ASCII table.
+{: .prompt-info }
 
 So, according to function "encode_input" lets see in which condition inside loop local_58 array's 11th index is getting populated as we now know what should be the resulting value at that index. 
 
@@ -322,7 +324,7 @@ So, according to function "encode_input" lets see in which condition inside loop
 
 In above function's for loop, we need to consider only case when i=11, As (11 & 1 != 0 ), so the conditions that it might getting populated should be between these two: 
 
-```
+```c
 		else if((key[i] & 1) == 0)	
 		{
 			local_58[i] = key[i] + num * '\x02';  ----> 
@@ -350,7 +352,7 @@ In case when key\[11\] is even in the "else if(((key\[11\] & 1) == 0))" conditio
 
 Now we already know that "num" value could be greater than 0 and less than or equal to 50, so for every value of number user passes let's get the character that should present in our key at index 11, to make this program reach to "Access granted!!!" condition. By doing it we would have all possible solution for this challenge. 
 
-```
+```c
 #include<stdio.h>
 
 int main()
@@ -366,7 +368,6 @@ int main()
 	}
 
 } 
-
 ```
 
 If we would run the solution and take the value of key and number and use it in the challenge it can be observed that we have solved the challenge. 
