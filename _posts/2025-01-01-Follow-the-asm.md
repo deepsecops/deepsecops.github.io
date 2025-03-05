@@ -9,6 +9,9 @@ tags: [crackme]
 toc: true
 ---
 
+In this reverse engineering challenge we would see that static analysis doesn't provides us that much information to solve or move further, so we need to dynamically understand the behavior of the program, and understand what input exactly it requires, so that we can make our input which is expected and try to solve the challenge.
+
+It makes use of the "ebp" register as base and writes the instructions in the stack, later on it makes the execution jump to the stack by making a call to stack address where instructions were stored and from there it would process and compare the user input bytes with the XOR encrypted bytes. I have explained all the details in my writeup. 
 
 
 Link to the Challenge: [https://crackmes.one/crackme/66fd63059b533b4c22bd0b91](https://crackmes.one/crackme/66fd63059b533b4c22bd0b91)
