@@ -3,7 +3,7 @@ title: Simple CTF
 description: >-
   This challenge is easy just by looking into the decompiled version one can obtain the logic and using simple math operation this challenge can be solved. 
 author: deepsecops
-date: 2025-01-17T12:00:00+0530
+date: 2025-01-27T12:00:00+0530
 categories: [Reverse Engineering Challanges, crackme]
 tags: [crackme]
 toc: true
