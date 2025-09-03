@@ -9,7 +9,7 @@ tags: [crackme]
 toc: true
 ---
 
-Link to the Challenge: [https://crackmes.one/crackme/68692679aadb6eeafb398fdf](https://crackmes.one/crackme/66ee30341070323296555610)
+Link to the Challenge: [https://crackmes.one/crackme/68692679aadb6eeafb398fdf](https://crackmes.one/crackme/68692679aadb6eeafb398fdf)
 
 My Linkedin Profile: [https://www.linkedin.com/in/deepak-bhardwaj-aa8543143/](https://www.linkedin.com/in/deepak-bhardwaj-aa8543143/)
 
